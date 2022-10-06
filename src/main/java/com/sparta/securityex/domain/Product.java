@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Setter
 @Getter
@@ -37,6 +38,9 @@ public class Product extends Timestamped {
     @Column(nullable = false)
     private Long userId;
 
+    @ManyToMany
+    private List<Folder> folderList;
+
     public Product(ProductRequestDto requestDto, Long userId) {
         this.userId = userId;
         this.title = requestDto.getTitle();
@@ -48,5 +52,9 @@ public class Product extends Timestamped {
 
     public void update(ProductMypriceRequestDto requestDto) {
         this.myprice = requestDto.getMyprice();
+    }
+
+    public void addFolder(Folder folder) {
+        this.folderList.add(folder);
     }
 }
